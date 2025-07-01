@@ -1,5 +1,5 @@
 # App Build
-FROM us-docker.pkg.dev/alias-cloud/gcr.io/php:8.3-frankenphp
+FROM us-docker.pkg.dev/element-energy/gcr.io/php:8.3-frankenphp
 
 RUN sed -i 's/{$SERVER_NAME:localhost}/:{$PORT}/' /etc/caddy/Caddyfile && \
     sed -i '/CADDY_GLOBAL_OPTIONS/a http_port {$PORT}' /etc/caddy/Caddyfile && \
