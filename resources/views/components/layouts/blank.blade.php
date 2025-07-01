@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased min-h-screen flex flex-col">
-        <header class="flex justify-center pt-[70px]">
+        <header class="flex justify-center pt-[70px] z-10">
             <div class="max-w-screen-xl w-full flex items-center mb-6 px-4">
                 <img src="{{ asset('images/logo.png') }}" alt="Ventura Logo" class="">
             </div>
@@ -35,7 +35,7 @@
                         <p class="text-xs text-gray-400 pt-5">&copy; 2025 Ventura Community Management, LLC. All rights reserved.</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-6 text-sm text-blue-600">
+                <div class="flex items-center space-x-2 text-sm text-blue-600">
                     <a href="#" class="hover:text-blue-800 font-medium text-[#03a1bf]">Privacy Policy</a>
                     <span class="text-gray-400">|</span>
                     <a href="#" class="hover:text-blue-800 font-medium text-[#03a1bf]">Terms of Use</a>
