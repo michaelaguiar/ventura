@@ -26,19 +26,21 @@
         </main>
 
         <footer class="flex flex-col justify-center items-center  bg-white/90 backdrop-blur-sm border-t border-gray-200/50">
-            <div class="max-w-screen-xl w-full px-8 py-6 flex items-center justify-between px-4">
-                <div class="flex items-center">
-                    <div>
-                        <img src="{{ asset('images/logo_footer.png') }}" alt="Ventura Logo" class="">
+            <div class="max-w-screen-xl w-full px-8 py-6 px-4">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="flex items-center">
+                        <div>
+                            <img src="{{ asset('images/logo_footer.png') }}" alt="Ventura Logo" class="">
 
-                        <p class="text-sm text-gray-600 max-w-md pt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <p class="text-xs text-gray-400 pt-5">&copy; 2025 Ventura Community Management, LLC. All rights reserved.</p>
+                            <p class="text-sm text-gray-600 max-w-md pt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <p class="text-xs text-gray-400 pt-5">&copy; 2025 Ventura Community Management, LLC. All rights reserved.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="flex items-center space-x-2 text-sm text-blue-600">
-                    <a href="#" class="hover:text-blue-800 font-medium text-[#03a1bf]">Privacy Policy</a>
-                    <span class="text-gray-400">|</span>
-                    <a href="#" class="hover:text-blue-800 font-medium text-[#03a1bf]">Terms of Use</a>
+                    <div class="flex items-center space-x-2 text-sm text-blue-600 mt-4 md:mt-0">
+                        <a href="#" class="hover:text-blue-800 font-medium text-[#03a1bf]">Privacy Policy</a>
+                        <span class="text-gray-400">|</span>
+                        <a href="#" class="hover:text-blue-800 font-medium text-[#03a1bf]">Terms of Use</a>
+                    </div>
                 </div>
             </div>
         </footer>
