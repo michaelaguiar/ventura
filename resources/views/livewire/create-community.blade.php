@@ -3,7 +3,7 @@
     <div class="max-w-screen-xl w-full relative" style="background-image: url('{{ asset('images/community-hand.png') }}'); background-size: 796px 742px; background-repeat: no-repeat; background-position: bottom right;">
 
         <!-- Left Side - Form Section -->
-        <div class=" flex flex-col justify-center  py-8">
+        <div class="flex flex-col justify-center px-8 py-8">
             <!-- Form -->
             <form wire:submit="next" class="space-y-6 max-w-sm">
                 <!-- Community Name -->
