@@ -254,7 +254,7 @@
                                     <span class="text-gray-500 px-4" x-text="fileName"></span>
                                     <button
                                         type="button"
-                                        class="px-8 py-2.5 bg-[#03a1bf] text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+                                        class="px-8 py-2.5 bg-[#03a1bf] text-white rounded hover:bg-[#027a8f] focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
                                     >
                                         Browse
                                     </button>
