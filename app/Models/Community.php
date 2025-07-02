@@ -8,6 +8,11 @@ class Community extends Model
 {
     protected $fillable = ["name", "address", "phone", "email", "logo_path"];
 
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
     public function maintenanceRequests()
     {
         return $this->hasMany(MaintenanceRequest::class);
