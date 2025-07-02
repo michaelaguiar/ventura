@@ -15,10 +15,19 @@ use Illuminate\Support\Facades\Route;
 // })->name('home');
 
 Route::get("/", CreateCommunity::class)->name("home");
-Route::get("/activity", CreateActivity::class)->name("activity");
-Route::get("/vendor", CreateVendor::class)->name("vendor");
-Route::get("/maintenance", MaintenanceRequest::class)->name("maintenance");
-Route::get("/amenity", BookAmenity::class)->name("amenity");
+Route::get("/community/{community}/activities", CreateActivity::class)->name(
+    "activity"
+);
+Route::get("/community/{community}/vendors", CreateVendor::class)->name(
+    "vendor"
+);
+Route::get(
+    "/community/{community}/maintenance",
+    MaintenanceRequest::class
+)->name("maintenance");
+Route::get("/community/{community}/amenities", BookAmenity::class)->name(
+    "amenity"
+);
 
 Route::view("dashboard", "dashboard")
     ->middleware(["auth", "verified"])

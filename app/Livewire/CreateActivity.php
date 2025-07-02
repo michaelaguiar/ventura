@@ -2,12 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Actions\CreateActivity as CreateActivityAction;
 use App\Models\Activity;
 use App\Models\Community;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class CreateActivity extends Component
 {
@@ -25,6 +27,10 @@ class CreateActivity extends Component
 
     public $activities = [];
     public $selectedCategory = null;
+    public $showModal = false;
+    public $modalPage = 1;
+    public $perPage = 12;
+    public $community = null;
 
     protected $rules = [
         "formData.name" => "required|max:255",
@@ -54,77 +60,44 @@ class CreateActivity extends Component
             "Activity details must be less than 1000 characters",
     ];
 
-    public function mount(): void
+    public function mount(request $request, Community $community): void
     {
-        // Set default dates to today and tomorrow
+        $this->community = $community;
+        // Set default dates to today
         $this->formData["start_date"] = Carbon::today()->format("Y-m-d");
         $this->formData["end_date"] = Carbon::today()->format("Y-m-d");
 
+        $this->loadCommunity();
         $this->loadActivities();
+    }
+
+    public function loadCommunity(): void
+    {
+        // Get the first community for demo purposes
+        // In a real app, this would be based on the current user's community
+        $this->community = Community::query()->first();
     }
 
     public function loadActivities(): void
     {
-        try {
-            // Get the first community for demo purposes
-            // In a real app, this would be based on the current user's community
-            $community = Community::query()->first();
+        $activities = Activity::where("community_id", 1)
+            ->orderBy("start_date_time", "asc")
+            ->get();
 
-            if ($community) {
-                $this->activities = Activity::query()
-                    ->where("community_id", $community->id)
-                    ->orderBy("start_date_time", "asc")
-                    ->get()
-                    ->map(function ($activity) {
-                        return [
-                            "id" => $activity->id,
-                            "name" => $activity->name,
-                            "start_date_time" => Carbon::parse(
-                                $activity->start_date_time
-                            ),
-                            "location" => $activity->location,
-                            "details" => $activity->details,
-                        ];
-                    })
-                    ->toArray();
-            } else {
-                $this->activities = [];
-            }
-        } catch (\Exception $e) {
-            Log::error("Error loading activities: " . $e->getMessage());
-            // Fallback to sample activities when database is not available
-            $this->activities = [
-                [
-                    "id" => 1,
-                    "name" => "Community Pool Party",
-                    "start_date_time" => Carbon::now()
-                        ->addDays(2)
-                        ->setTime(14, 0),
-                    "location" => "Pool Area",
-                    "details" =>
-                        "Join us for a fun pool party with games and refreshments.",
-                ],
-                [
-                    "id" => 2,
-                    "name" => "Fitness Class",
-                    "start_date_time" => Carbon::now()
-                        ->addDays(3)
-                        ->setTime(9, 0),
-                    "location" => "Fitness Center",
-                    "details" =>
-                        "Morning yoga and fitness session for all levels.",
-                ],
-                [
-                    "id" => 3,
-                    "name" => "Movie Night",
-                    "start_date_time" => Carbon::now()
-                        ->addDays(5)
-                        ->setTime(19, 0),
-                    "location" => "Community Center",
-                    "details" => "Family-friendly movie night with popcorn.",
-                ],
-            ];
-        }
+        $this->activities = $activities
+            ->map(function ($activity) {
+                return [
+                    "id" => $activity->id,
+                    "name" => $activity->name,
+                    "start_date_time" => Carbon::parse(
+                        $activity->start_date_time
+                    ),
+                    "end_date_time" => Carbon::parse($activity->end_date_time),
+                    "location" => $activity->location,
+                    "details" => $activity->details,
+                ];
+            })
+            ->toArray();
     }
 
     public function render()
@@ -136,45 +109,20 @@ class CreateActivity extends Component
 
     public function addActivity(): void
     {
+        $this->validate();
+
         try {
-            $this->validate();
-
-            // Get the first community for demo purposes
-            // In a real app, this would be based on the current user's community
-            $community = Community::query()->first();
-
-            if (!$community) {
-                // Create a default community if none exists
-                $community = Community::query()->create([
-                    "name" => "Default Community",
-                    "address" => "123 Main St",
-                    "phone" => "555-0123",
-                    "email" => "admin@community.com",
-                ]);
-            }
-
-            // Combine date and time
-            $startDateTime = Carbon::parse(
-                $this->formData["start_date"] .
-                    " " .
-                    $this->formData["start_time"]
-            );
-            $endDateTime = Carbon::parse(
-                $this->formData["end_date"] . " " . $this->formData["end_time"]
+            CreateActivityAction::run(
+                name: $this->formData["name"],
+                start_date: $this->formData["start_date"],
+                start_time: $this->formData["start_time"],
+                end_date: $this->formData["end_date"],
+                end_time: $this->formData["end_time"],
+                location: $this->formData["location"],
+                details: $this->formData["details"]
             );
 
-            // Create the activity
-            $activity = Activity::query()->create([
-                "community_id" => $community->id,
-                "user_id" => auth()->id() ?? 1, // Default to user ID 1 for demo
-                "name" => $this->formData["name"],
-                "start_date_time" => $startDateTime,
-                "end_date_time" => $endDateTime,
-                "location" => $this->formData["location"],
-                "details" => $this->formData["details"],
-            ]);
-
-            // Reset form
+            // Reset form after successful creation
             $this->formData = [
                 "name" => null,
                 "start_date" => Carbon::today()->format("Y-m-d"),
@@ -185,7 +133,7 @@ class CreateActivity extends Component
                 "details" => null,
             ];
 
-            // Reload activities
+            // Reload activities from database
             $this->loadActivities();
 
             // Show success message
@@ -194,41 +142,10 @@ class CreateActivity extends Component
             // Log the error for debugging
             Log::error("Error creating activity: " . $e->getMessage());
 
-            // Fallback: Add activity to the local array when database is not available
-            $newActivity = [
-                "id" => count($this->activities) + 1,
-                "name" => $this->formData["name"],
-                "start_date_time" => Carbon::parse(
-                    $this->formData["start_date"] .
-                        " " .
-                        $this->formData["start_time"]
-                ),
-                "location" => $this->formData["location"],
-                "details" => $this->formData["details"],
-            ];
-
-            // Add to the beginning of the array and sort by date
-            array_unshift($this->activities, $newActivity);
-            usort($this->activities, function ($a, $b) {
-                return $a["start_date_time"]->timestamp <=>
-                    $b["start_date_time"]->timestamp;
-            });
-
-            // Reset form
-            $this->formData = [
-                "name" => null,
-                "start_date" => Carbon::today()->format("Y-m-d"),
-                "start_time" => "10:00",
-                "end_date" => Carbon::today()->format("Y-m-d"),
-                "end_time" => "12:00",
-                "location" => null,
-                "details" => null,
-            ];
-
-            // Show success message
-            session()->flash(
-                "message",
-                "Activity created successfully! (Demo mode - database not connected)"
+            // Show user-friendly error message
+            $this->addError(
+                "general",
+                "Failed to create activity. Please try again."
             );
         }
     }
@@ -239,5 +156,41 @@ class CreateActivity extends Component
     public function selectCategory($category): void
     {
         $this->selectedCategory = $category;
+    }
+
+    public function openModal(): void
+    {
+        $this->showModal = true;
+        $this->modalPage = 1;
+    }
+
+    public function closeModal(): void
+    {
+        $this->showModal = false;
+    }
+
+    public function getModalActivities()
+    {
+        $offset = ($this->modalPage - 1) * $this->perPage;
+        return array_slice($this->activities, $offset, $this->perPage);
+    }
+
+    public function getTotalPages()
+    {
+        return ceil(count($this->activities) / $this->perPage);
+    }
+
+    public function previousPage(): void
+    {
+        if ($this->modalPage > 1) {
+            $this->modalPage--;
+        }
+    }
+
+    public function nextPage(): void
+    {
+        if ($this->modalPage < $this->getTotalPages()) {
+            $this->modalPage++;
+        }
     }
 }
