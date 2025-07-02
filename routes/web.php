@@ -1,6 +1,10 @@
 <?php
 
+use App\Livewire\CreateActivity;
 use App\Livewire\CreateCommunity;
+use App\Livewire\CreateVendor;
+use App\Livewire\MaintenanceRequest;
+use App\Livewire\BookAmenity;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -11,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 // })->name('home');
 
 Route::get("/", CreateCommunity::class)->name("home");
+Route::get("/activity", CreateActivity::class)->name("activity");
+Route::get("/vendor", CreateVendor::class)->name("vendor");
+Route::get("/maintenance", MaintenanceRequest::class)->name("maintenance");
+Route::get("/amenity", BookAmenity::class)->name("amenity");
 
 Route::view("dashboard", "dashboard")
     ->middleware(["auth", "verified"])
