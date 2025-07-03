@@ -10,6 +10,16 @@ class CreateActivity
 {
     /**
      * Create a new activity
+     *
+     * @param Community $community
+     * @param string $name
+     * @param string $start_date
+     * @param string $start_time
+     * @param string $end_date
+     * @param string $end_time
+     * @param string|null $location
+     * @param string|null $details
+     * @return Activity
      */
     public static function run(
         Community $community,
@@ -18,20 +28,20 @@ class CreateActivity
         string $start_time,
         string $end_date,
         string $end_time,
-        string $location,
-        string $details
+        string $location = null,
+        string $details = null
     ): Activity {
-        $startDateTime = Carbon::parse($start_date.' '.$start_time);
-        $endDateTime = Carbon::parse($end_date.' '.$end_time);
+        $startDateTime = Carbon::parse($start_date . " " . $start_time);
+        $endDateTime = Carbon::parse($end_date . " " . $end_time);
 
         return Activity::create([
-            'community_id' => $community->id,
+            "community_id" => $community->id,
             // "user_id" => auth()->id() ?? 1, // Default to user ID 1 for demo
-            'name' => $name,
-            'start_date_time' => $startDateTime,
-            'end_date_time' => $endDateTime,
-            'location' => $location,
-            'details' => $details,
+            "name" => $name,
+            "start_date_time" => $startDateTime,
+            "end_date_time" => $endDateTime,
+            "location" => $location,
+            "details" => $details,
         ]);
     }
 }
