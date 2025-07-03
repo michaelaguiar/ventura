@@ -56,6 +56,8 @@ class CreateCommunity extends Component
     {
         $this->validate();
 
+        dd($this->logo);
+
         // Store photo to cloud storage
         $photo = $this->logo->store("community/logos");
 
