@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Amenity extends Model
 {
-    protected $fillable = ["community_id", "user_id", "name", "description"];
+    protected $fillable = ['community_id', 'user_id', 'name', 'description'];
 
     public function community()
     {

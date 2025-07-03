@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $fillable = [
-        "community_id",
-        "user_id",
-        "name",
-        "start_date_time",
-        "end_date_time",
-        "location",
-        "details",
+        'community_id',
+        'user_id',
+        'name',
+        'start_date_time',
+        'end_date_time',
+        'location',
+        'details',
     ];
 
     public function community()

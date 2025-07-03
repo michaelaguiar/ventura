@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class MaintenanceRequest extends Model
 {
     protected $fillable = [
-        "community_id",
-        "user_id",
-        "title",
-        "description",
-        "status",
+        'community_id',
+        'user_id',
+        'title',
+        'description',
+        'status',
     ];
 
     public function community()

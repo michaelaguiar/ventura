@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Community extends Model
 {
     protected $fillable = [
-        "name",
-        "address",
-        "contact_name",
-        "phone",
-        "email",
-        "logo_path",
+        'name',
+        'address',
+        'contact_name',
+        'phone',
+        'email',
+        'logo_path',
     ];
 
     public function activities()
