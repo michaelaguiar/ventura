@@ -73,7 +73,7 @@ class CreateActivity extends Component
 
     public function loadActivities(): void
     {
-        $activities = Activity::where("community_id", 1)
+        $activities = Activity::where("community_id", $this->community->id)
             ->orderBy("start_date_time", "asc")
             ->get();
 
@@ -106,6 +106,7 @@ class CreateActivity extends Component
 
         try {
             CreateActivityAction::run(
+                community: $this->community,
                 name: $this->formData["name"],
                 start_date: $this->formData["start_date"],
                 start_time: $this->formData["start_time"],

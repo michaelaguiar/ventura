@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Models\Activity;
+use App\Models\Community;
 use Carbon\Carbon;
 
 class CreateActivity
@@ -10,6 +11,7 @@ class CreateActivity
     /**
      * Create a new activity
      *
+     * @param Community $community
      * @param string $name
      * @param string $start_date
      * @param string $start_time
@@ -20,6 +22,7 @@ class CreateActivity
      * @return Activity
      */
     public static function run(
+        Community $community,
         string $name,
         string $start_date,
         string $start_time,
