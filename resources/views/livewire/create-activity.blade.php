@@ -5,18 +5,19 @@
         <!-- Desktop Layout - Side by Side -->
         <div class="hidden lg:flex relative " style="">
             <!-- Background Hand Image -->
-            <div class="absolute w-[630px] h-[669px] bottom-0 left-[300px] xl:left-[370px]" style="background-image: url('{{ asset('images/hand_sub.png') }}'); background-size: 630px 669px; background-repeat: no-repeat; background-position: right bottom; z-index: 1;">
+            <div class="absolute w-[630px] h-[669px] bottom-0 left-[300px] xl:left-[35%]" style="background-image: url('{{ asset('images/hand_sub.png') }}'); background-size: 630px 669px; background-repeat: no-repeat; background-position: right bottom; z-index: 1;">
                 <div class="w-[239px] h-[300px] flex flex-col ml-[63px] mt-[36px]">
                     <div class="flex-1 text-center">
                         <h3 class="font-bold text-[11px] text-gray-800">{{ $community->name ?? 'Desert Vista RV Resort' }}</h3>
                         <p class="text-[9px] text-gray-600">{{ $community->address ?? 'Community Address' }}</p>
                     </div>
 
+
                     <!-- Phone Header with Community Info -->
                     <div class="mt-[75px]">
                         <div class="flex items-center justify-center">
                             @if($community && $community->logo_path)
-                                <img src="{{ Storage::url($community->logo_path) }}" alt="{{ $community->name ?? 'Community' }} Logo" class="w-26 h-26 rounded-full object-cover">
+                                <img src="{{ Storage::url($community->logo_path) }}" alt="{{ $community->name ?? 'Community' }} Logo" class="w-26 h-26 rounded-full object-contain bg-[#333]">
                             @else
                                 <div class="w-26 h-26 bg-[#03a1bf] rounded-full flex items-center justify-center">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
