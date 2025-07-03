@@ -10,23 +10,19 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('home');
-
 Route::get("/", CreateCommunity::class)->name("home");
 Route::get("/community/{community}/activities", CreateActivity::class)->name(
-    "activity"
+    "community.activities"
 );
 Route::get("/community/{community}/vendors", CreateVendor::class)->name(
-    "vendor"
+    "community.vendors"
 );
 Route::get(
     "/community/{community}/maintenance",
     MaintenanceRequest::class
-)->name("maintenance");
+)->name("community.maintenance");
 Route::get("/community/{community}/amenities", BookAmenity::class)->name(
-    "amenity"
+    "community.amenities"
 );
 
 Route::view("dashboard", "dashboard")

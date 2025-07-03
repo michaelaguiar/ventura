@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
+use App\Actions\CreateCommunity as CreateCommunityAction;
 
 class CreateCommunity extends Component
 {
@@ -15,7 +16,7 @@ class CreateCommunity extends Component
         "address" => null,
         "contactName" => null,
         "phone" => null,
-        "contactEmail" => null,
+        "email" => null,
     ];
 
     public $logo;
@@ -25,7 +26,7 @@ class CreateCommunity extends Component
         "formData.address" => "required|max:255",
         "formData.contactName" => "required|max:255",
         "formData.phone" => "required",
-        "formData.contactEmail" => "required|email|max:255",
+        "formData.email" => "required|email|max:255",
         "logo" => "nullable|image|max:1024",
     ];
 
@@ -38,9 +39,9 @@ class CreateCommunity extends Component
         "formData.contactName.max" =>
             "Community Contact Name must be less than 255 characters",
         "formData.phone.required" => "Phone Number is required",
-        "formData.contactEmail.required" => "Email Address is required",
-        "formData.contactEmail.email" => "Email Address must be valid",
-        "formData.contactEmail.max" =>
+        "formData.email.required" => "Email Address is required",
+        "formData.email.email" => "Email Address must be valid",
+        "formData.email.max" =>
             "Email Address must be less than 255 characters",
     ];
 
@@ -58,11 +59,15 @@ class CreateCommunity extends Component
         // Store photo to cloud storage
         $photo = $this->logo->store("community/logos");
 
-        // Update formdata with photo
-        $this->formData["logo_path"] = $photo;
+        $community = CreateCommunityAction::run(
+            name: $this->formData["name"],
+            address: $this->formData["address"],
+            contactName: $this->formData["contactName"],
+            phone: $this->formData["phone"],
+            email: $this->formData["email"],
+            logoPath: $photo
+        );
 
-        dd($this->formData);
-
-        CreateCommunity::create($this->formData);
+        return redirect()->route("community.activities", $community);
     }
 }

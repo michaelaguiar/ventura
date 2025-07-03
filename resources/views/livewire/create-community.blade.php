@@ -86,16 +86,17 @@
                         </label>
                         <input
                             type="email"
-                            id="emailAddress"
-                            wire:model="formData.emailAddress"
+                            id="email"
+                            wire:model="formData.email"
                             placeholder="Email Address"
                             class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                             required
                         >
-                        <x-input-error for="formData.emailAddress" />
+                        <x-input-error for="formData.email" />
                     </div>
 
                     <!-- Upload Logo -->
+
                     <div x-data="{ fileName: 'No file selected.' }">
                         <label class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
                             UPLOAD A LOGO

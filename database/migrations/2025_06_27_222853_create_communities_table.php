@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string("name");
             $table->string("address");
+            $table->string("contact_name");
             $table->string("phone");
             $table->string("email");
             $table->string("logo_path");

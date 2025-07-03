@@ -16,7 +16,7 @@
                     <div class="mt-[75px]">
                         <div class="flex items-center justify-center">
                             @if($community && $community->logo_path)
-                                <img src="{{ asset('storage/' . $community->logo_path) }}" alt="{{ $community->name ?? 'Community' }} Logo" class="w-26 h-26 rounded-full object-cover">
+                                <img src="{{ Storage::url($community->logo_path) }}" alt="{{ $community->name ?? 'Community' }} Logo" class="w-26 h-26 rounded-full object-cover">
                             @else
                                 <div class="w-26 h-26 bg-[#03a1bf] rounded-full flex items-center justify-center">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
