@@ -63,19 +63,12 @@ class CreateActivity extends Component
     public function mount(request $request, Community $community): void
     {
         $this->community = $community;
+
         // Set default dates to today
         $this->formData["start_date"] = Carbon::today()->format("Y-m-d");
         $this->formData["end_date"] = Carbon::today()->format("Y-m-d");
 
-        $this->loadCommunity();
         $this->loadActivities();
-    }
-
-    public function loadCommunity(): void
-    {
-        // Get the first community for demo purposes
-        // In a real app, this would be based on the current user's community
-        $this->community = Community::query()->first();
     }
 
     public function loadActivities(): void
