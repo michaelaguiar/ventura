@@ -35,7 +35,7 @@ class CreateActivity
         $endDateTime = Carbon::parse($end_date . " " . $end_time);
 
         return Activity::create([
-            "community_id" => 1,
+            "community_id" => $community->id,
             // "user_id" => auth()->id() ?? 1, // Default to user ID 1 for demo
             "name" => $name,
             "start_date_time" => $startDateTime,
