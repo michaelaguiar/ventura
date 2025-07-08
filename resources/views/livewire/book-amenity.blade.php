@@ -47,14 +47,14 @@
                                 </a>
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">ACTIVITIES</span>
                             </div>
-                            <div class="flex flex-col items-center">
+                            <!-- <div class="flex flex-col items-center">
                                 <a href="#" class="bg-[#f0ad4e] rounded-lg flex items-center justify-center p-3 hover:bg-[#ec9c2e] transition-colors w-full h-12">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                                     </svg>
                                 </a>
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">EMERGENCY</span>
-                            </div>
+                            </div> -->
 
                             <!-- Row 2 -->
                             <div class="flex flex-col items-center">
@@ -83,7 +83,7 @@
                             </div>
 
                             <!-- Row 3 -->
-                            <div class="flex flex-col items-center">
+                            <!-- <div class="flex flex-col items-center">
                                 <a href="#" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -106,7 +106,7 @@
                                     </svg>
                                 </a>
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">MESSAGES</span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
