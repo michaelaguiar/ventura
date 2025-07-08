@@ -212,18 +212,9 @@
                                 required
                             >
                                 <option value="">Select Category</option>
-                                <option value="Plumbing">Plumbing</option>
-                                <option value="Electrical">Electrical</option>
-                                <option value="HVAC">HVAC</option>
-                                <option value="Appliances">Appliances</option>
-                                <option value="Structural">Structural</option>
-                                <option value="Landscaping">Landscaping</option>
-                                <option value="Cleaning">Cleaning</option>
-                                <option value="Pest Control">Pest Control</option>
-                                <option value="Security">Security</option>
-                                <option value="Pool/Spa">Pool/Spa</option>
-                                <option value="Common Areas">Common Areas</option>
-                                <option value="Other">Other</option>
+                                @foreach(\App\Enums\MaintenanceRequestCategory::cases() as $category)
+                                    <option value="{{ $category->value }}">{{ $category->label() }}</option>
+                                @endforeach
                             </select>
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -325,7 +316,7 @@
                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                         </svg>
-                                        {{ $request['category'] }}
+                                        {{ $request['category'] instanceof \App\Enums\MaintenanceRequestCategory ? $request['category']->label() : $request['category'] }}
                                     </div>
                                 </div>
                             </div>
@@ -404,7 +395,7 @@
                                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                                 </svg>
-                                                {{ $request['category'] }}
+                                                {{ $request['category'] instanceof \App\Enums\MaintenanceRequestCategory ? $request['category']->label() : $request['category'] }}
                                             </div>
                                         </div>
                                     </div>
@@ -495,7 +486,7 @@
 
                             <div>
                                 <h4 class="font-semibold text-gray-800 mb-2">Category</h4>
-                                <p class="text-gray-600">{{ $selectedRequest['category'] }}</p>
+                                <p class="text-gray-600">{{ $selectedRequest['category'] instanceof \App\Enums\MaintenanceRequestCategory ? $selectedRequest['category']->label() : $selectedRequest['category'] }}</p>
                             </div>
 
                             <div>
@@ -623,18 +614,9 @@
                             required
                         >
                             <option value="">Select Category</option>
-                            <option value="Plumbing">Plumbing</option>
-                            <option value="Electrical">Electrical</option>
-                            <option value="HVAC">HVAC</option>
-                            <option value="Appliances">Appliances</option>
-                            <option value="Structural">Structural</option>
-                            <option value="Landscaping">Landscaping</option>
-                            <option value="Cleaning">Cleaning</option>
-                            <option value="Pest Control">Pest Control</option>
-                            <option value="Security">Security</option>
-                            <option value="Pool/Spa">Pool/Spa</option>
-                            <option value="Common Areas">Common Areas</option>
-                            <option value="Other">Other</option>
+                            @foreach(\App\Enums\MaintenanceRequestCategory::cases() as $category)
+                                <option value="{{ $category->value }}">{{ $category->label() }}</option>
+                            @endforeach
                         </select>
                         <x-input-error for="formData.category" />
                     </div>
@@ -724,7 +706,7 @@
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                             </svg>
-                                            {{ $request['category'] }}
+                                            {{ $request['category'] instanceof \App\Enums\MaintenanceRequestCategory ? $request['category']->label() : $request['category'] }}
                                         </div>
                                     </div>
                                 </div>

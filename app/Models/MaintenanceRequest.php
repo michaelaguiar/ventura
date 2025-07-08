@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\MaintenanceRequestCategory;
+use App\Enums\MaintenanceRequestStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class MaintenanceRequest extends Model
@@ -19,6 +21,8 @@ class MaintenanceRequest extends Model
 
     protected $casts = [
         "photos" => "array",
+        "status" => MaintenanceRequestStatus::class,
+        "category" => MaintenanceRequestCategory::class,
     ];
 
     public function community()

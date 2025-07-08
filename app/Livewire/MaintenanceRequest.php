@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Actions\CreateMaintenanceRequest;
+use App\Enums\MaintenanceRequestCategory;
+use App\Enums\MaintenanceRequestStatus;
 use App\Models\Community;
 use App\Models\MaintenanceRequest as MaintenanceRequestModel;
 use Illuminate\Http\Request;
@@ -42,7 +44,7 @@ class MaintenanceRequest extends Component
         "formData.title" => "required|max:255",
         "formData.description" => "required|max:1000",
         "formData.priority" => "required|in:low,medium,high,urgent",
-        "formData.category" => "required|max:255",
+        "formData.category" => "required",
         "photos.*" => "nullable|image|max:2048",
     ];
 
@@ -56,7 +58,6 @@ class MaintenanceRequest extends Component
         "formData.priority.in" =>
             "Priority must be low, medium, high, or urgent",
         "formData.category.required" => "Category is required",
-        "formData.category.max" => "Category must be less than 255 characters",
         "photos.*.image" => "All files must be images",
         "photos.*.max" => "Each photo must be less than 2MB",
     ];
@@ -83,8 +84,14 @@ class MaintenanceRequest extends Component
                     "title" => $request->title,
                     "description" => $request->description,
                     "priority" => $request->priority,
-                    "category" => $request->category,
-                    "status" => $request->status,
+                    "category" =>
+                        $request->category instanceof MaintenanceRequestCategory
+                            ? $request->category->label()
+                            : $request->category,
+                    "status" =>
+                        $request->status instanceof MaintenanceRequestStatus
+                            ? $request->status->label()
+                            : $request->status,
                     "photos" => $request->photos ?? [],
                     "created_at" => $request->created_at,
                 ];
@@ -118,7 +125,9 @@ class MaintenanceRequest extends Component
                 title: $this->formData["title"],
                 description: $this->formData["description"],
                 priority: $this->formData["priority"],
-                category: $this->formData["category"],
+                category: MaintenanceRequestCategory::from(
+                    $this->formData["category"]
+                ),
                 photos: $photoPaths
             );
 
@@ -225,11 +234,13 @@ class MaintenanceRequest extends Component
 
     public function getStatusColor($status): string
     {
-        return match ($status) {
+        return match (strtolower($status)) {
             "pending" => "bg-yellow-100 text-yellow-800",
-            "in_progress" => "bg-blue-100 text-blue-800",
+            "in progress" => "bg-blue-100 text-blue-800",
             "completed" => "bg-green-100 text-green-800",
             "cancelled" => "bg-red-100 text-red-800",
+            "on hold" => "bg-orange-100 text-orange-800",
+            "requires approval" => "bg-purple-100 text-purple-800",
             default => "bg-gray-100 text-gray-800",
         };
     }

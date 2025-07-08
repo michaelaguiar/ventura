@@ -2,6 +2,8 @@
 
 namespace App\Actions;
 
+use App\Enums\MaintenanceRequestCategory;
+use App\Enums\MaintenanceRequestStatus;
 use App\Models\Community;
 use App\Models\MaintenanceRequest;
 use App\Models\User;
@@ -17,7 +19,7 @@ class CreateMaintenanceRequest
         string $title,
         string $description,
         string $priority,
-        string $category,
+        MaintenanceRequestCategory $category,
         array $photos = []
     ): MaintenanceRequest {
         return MaintenanceRequest::create([
@@ -27,7 +29,7 @@ class CreateMaintenanceRequest
             "description" => $description,
             "priority" => $priority,
             "category" => $category,
-            "status" => "Pending",
+            "status" => MaintenanceRequestStatus::PENDING,
             "photos" => $photos,
         ]);
     }
