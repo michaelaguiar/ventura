@@ -9,20 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 class MaintenanceRequest extends Model
 {
     protected $fillable = [
-        "community_id",
-        "user_id",
-        "title",
-        "description",
-        "priority",
-        "category",
-        "status",
-        "photos",
+        'community_id',
+        'user_id',
+        'title',
+        'description',
+        'priority',
+        'category',
+        'status',
+        'photos',
     ];
 
     protected $casts = [
-        "photos" => "array",
-        "status" => MaintenanceRequestStatus::class,
-        "category" => MaintenanceRequestCategory::class,
+        'photos' => 'array',
+        'status' => MaintenanceRequestStatus::class,
+        'category' => MaintenanceRequestCategory::class,
     ];
 
     public function community()

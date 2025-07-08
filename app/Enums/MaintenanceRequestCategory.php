@@ -33,7 +33,7 @@ enum MaintenanceRequestCategory: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PLUMBING => 'Plumbing',
             self::ELECTRICAL => 'Electrical',
             self::HVAC => 'HVAC',
@@ -65,7 +65,7 @@ enum MaintenanceRequestCategory: string
 
     public function description(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PLUMBING => 'Plumbing issues, leaks, clogs, and repairs',
             self::ELECTRICAL => 'Electrical problems, outlets, and wiring',
             self::HVAC => 'Heating, ventilation, and air conditioning issues',
@@ -97,7 +97,7 @@ enum MaintenanceRequestCategory: string
 
     public function priority(): string
     {
-        return match($this) {
+        return match ($this) {
             self::SAFETY_EMERGENCY => 'urgent',
             self::PLUMBING => 'high',
             self::ELECTRICAL => 'high',
@@ -129,7 +129,7 @@ enum MaintenanceRequestCategory: string
 
     public static function getOptions(): array
     {
-        return array_map(fn($case) => [
+        return array_map(fn ($case) => [
             'value' => $case->value,
             'label' => $case->label(),
             'description' => $case->description(),
@@ -139,11 +139,11 @@ enum MaintenanceRequestCategory: string
 
     public static function getLabels(): array
     {
-        return array_map(fn($case) => $case->label(), self::cases());
+        return array_map(fn ($case) => $case->label(), self::cases());
     }
 
     public static function getByPriority(string $priority): array
     {
-        return array_filter(self::cases(), fn($case) => $case->priority() === $priority);
+        return array_filter(self::cases(), fn ($case) => $case->priority() === $priority);
     }
 }

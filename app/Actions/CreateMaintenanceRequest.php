@@ -23,14 +23,14 @@ class CreateMaintenanceRequest
         array $photos = []
     ): MaintenanceRequest {
         return MaintenanceRequest::create([
-            "community_id" => $community->id,
-            "user_id" => $user?->id,
-            "title" => $title,
-            "description" => $description,
-            "priority" => $priority,
-            "category" => $category,
-            "status" => MaintenanceRequestStatus::PENDING,
-            "photos" => $photos,
+            'community_id' => $community->id,
+            'user_id' => $user?->id,
+            'title' => $title,
+            'description' => $description,
+            'priority' => $priority,
+            'category' => $category,
+            'status' => MaintenanceRequestStatus::PENDING,
+            'photos' => $photos,
         ]);
     }
 }

@@ -12,7 +12,7 @@ enum BookingStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'Pending',
             self::CONFIRMED => 'Confirmed',
             self::CANCELLED => 'Cancelled',
@@ -23,7 +23,7 @@ enum BookingStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'bg-yellow-100 text-yellow-800',
             self::CONFIRMED => 'bg-green-100 text-green-800',
             self::CANCELLED => 'bg-red-100 text-red-800',
@@ -34,7 +34,7 @@ enum BookingStatus: string
 
     public static function getOptions(): array
     {
-        return array_map(fn($case) => [
+        return array_map(fn ($case) => [
             'value' => $case->value,
             'label' => $case->label(),
         ], self::cases());
