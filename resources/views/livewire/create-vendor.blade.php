@@ -3,7 +3,7 @@
     <div class="max-w-screen-xl w-full">
 
         <!-- Desktop Layout - Side by Side -->
-        <div class="hidden lg:flex relative " style="">
+        <div class="hidden lg:flex relative min-h-[750px]" style="">
             <!-- Background Hand Image -->
             <div class="absolute w-[630px] h-[669px] bottom-0 left-[300px] xl:left-[35%]" style="background-image: url('{{ asset('images/hand_sub.png') }}'); background-size: 630px 669px; background-repeat: no-repeat; background-position: right bottom; z-index: 1;">
                 <div class="w-[239px] h-[300px] flex flex-col ml-[63px] mt-[36px]">
