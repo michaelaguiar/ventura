@@ -160,7 +160,67 @@
                     </div>
 
                     <!-- Date and Time Row -->
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4" x-data="{
+                        startDate: $wire.entangle('formData.start_date'),
+                        endDate: $wire.entangle('formData.end_date'),
+                        init() {
+                           this.$watch('startDate', (value) => {
+                               this.updateEndDateMin();
+                           });
+                           this.$nextTick(() => {
+                               this.updateEndDateMin();
+                           });
+                        },
+                        validateEndDateTime() {
+                            this.validateDateTime('startDate', 'startTime', 'endDate', 'endTime');
+                        },
+                        updateEndDateMin() {
+                            const startDateValue = this.startDate;
+                            const endDateInput = document.getElementById('endDate');
+                            if (startDateValue && endDateInput) {
+                                endDateInput.min = startDateValue;
+                                // If current end date is before new start date, update it
+                                if (this.endDate && this.endDate < startDateValue) {
+                                    this.endDate = startDateValue;
+                                    $wire.set('formData.end_date', startDateValue);
+                                }
+                            }
+                        },
+                        enforceMinDate(inputId, minDateValue) {
+                            const input = document.getElementById(inputId);
+                            if (input && minDateValue) {
+                                if (input.value && input.value < minDateValue) {
+                                    input.value = minDateValue;
+                                    if (inputId === 'endDate') {
+                                        this.endDate = minDateValue;
+                                    }
+                                    $wire.set('formData.end_date', minDateValue);
+                                }
+                            }
+                        },
+                        validateDateTime(startDateId, startTimeId, endDateId, endTimeId) {
+                            const startDate = document.getElementById(startDateId).value;
+                            const startTime = document.getElementById(startTimeId).value;
+                            const endDate = document.getElementById(endDateId).value;
+                            const endTime = document.getElementById(endTimeId).value;
+
+                            if (startDate && startTime && endDate && endTime) {
+                                const startDateTime = new Date(startDate + 'T' + startTime);
+                                const endDateTime = new Date(endDate + 'T' + endTime);
+
+                                const endDateInput = document.getElementById(endDateId);
+                                const endTimeInput = document.getElementById(endTimeId);
+
+                                if (endDateTime < startDateTime) {
+                                    endDateInput.setCustomValidity('End date and time must be greater than or equal to start date and time');
+                                    endTimeInput.setCustomValidity('End date and time must be greater than or equal to start date and time');
+                                } else {
+                                    endDateInput.setCustomValidity('');
+                                    endTimeInput.setCustomValidity('');
+                                }
+                            }
+                        }
+                    }">
                         <!-- Start Date -->
                         <div>
                             <label for="startDate" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
@@ -173,6 +233,7 @@
                                     wire:model="formData.start_date"
                                     class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                                     required
+                                    @change="validateEndDateTime()"
                                 >
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,6 +256,7 @@
                                     wire:model="formData.start_time"
                                     class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                                     required
+                                    @change="validateEndDateTime()"
                                 >
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,6 +282,12 @@
                                     wire:model="formData.end_date"
                                     class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                                     required
+                                    @change="validateEndDateTime()"
+                                    :min="startDate || ''"
+                                    x-on:input="if ($event.target.value && startDate && $event.target.value < startDate) { $event.target.value = startDate; endDate = startDate; $wire.set('formData.end_date', startDate); }"
+                                    x-on:blur="if ($event.target.value && startDate && $event.target.value < startDate) { $event.target.value = startDate; endDate = startDate; $wire.set('formData.end_date', startDate); }"
+                                    x-on:keydown="if ($event.key === 'Enter' && $event.target.value && startDate && $event.target.value < startDate) { $event.preventDefault(); $event.target.value = startDate; endDate = startDate; $wire.set('formData.end_date', startDate); }"
+                                    @focus="enforceMinDate('endDate', startDate)"
                                 >
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,6 +296,7 @@
                                 </div>
                             </div>
                             <x-input-error for="formData.end_date" />
+                            <p class="text-xs text-gray-500 mt-1">End date must be on or after start date</p>
                         </div>
 
                         <!-- End Time -->
@@ -242,6 +311,7 @@
                                     wire:model="formData.end_time"
                                     class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                                     required
+                                    @change="validateEndDateTime()"
                                 >
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -531,6 +601,69 @@
                         <x-input-error for="formData.name" />
                     </div>
 
+                    <!-- Date and Time Section -->
+                    <div x-data="{
+                        startDateMobile: $wire.entangle('formData.start_date'),
+                        endDateMobile: $wire.entangle('formData.end_date'),
+                        init() {
+                           this.$watch('startDateMobile', (value) => {
+                               this.updateEndDateMinMobile();
+                           });
+                           this.$nextTick(() => {
+                               this.updateEndDateMinMobile();
+                           });
+                        },
+                        validateEndDateTime() {
+                            this.validateDateTime('startDateMobile', 'startTimeMobile', 'endDateMobile', 'endTimeMobile');
+                        },
+                        updateEndDateMinMobile() {
+                            const startDateValue = this.startDateMobile;
+                            const endDateInput = document.getElementById('endDateMobile');
+                            if (startDateValue && endDateInput) {
+                                endDateInput.min = startDateValue;
+                                // If current end date is before new start date, update it
+                                if (this.endDateMobile && this.endDateMobile < startDateValue) {
+                                    this.endDateMobile = startDateValue;
+                                    $wire.set('formData.end_date', startDateValue);
+                                }
+                            }
+                        },
+                        enforceMinDateMobile(inputId, minDateValue) {
+                            const input = document.getElementById(inputId);
+                            if (input && minDateValue) {
+                                if (input.value && input.value < minDateValue) {
+                                    input.value = minDateValue;
+                                    if (inputId === 'endDateMobile') {
+                                        this.endDateMobile = minDateValue;
+                                    }
+                                    $wire.set('formData.end_date', minDateValue);
+                                }
+                            }
+                        },
+                        validateDateTime(startDateId, startTimeId, endDateId, endTimeId) {
+                            const startDate = document.getElementById(startDateId).value;
+                            const startTime = document.getElementById(startTimeId).value;
+                            const endDate = document.getElementById(endDateId).value;
+                            const endTime = document.getElementById(endTimeId).value;
+
+                            if (startDate && startTime && endDate && endTime) {
+                                const startDateTime = new Date(startDate + 'T' + startTime);
+                                const endDateTime = new Date(endDate + 'T' + endTime);
+
+                                const endDateInput = document.getElementById(endDateId);
+                                const endTimeInput = document.getElementById(endTimeId);
+
+                                if (endDateTime < startDateTime) {
+                                    endDateInput.setCustomValidity('End date and time must be greater than or equal to start date and time');
+                                    endTimeInput.setCustomValidity('End date and time must be greater than or equal to start date and time');
+                                } else {
+                                    endDateInput.setCustomValidity('');
+                                    endTimeInput.setCustomValidity('');
+                                }
+                            }
+                        }
+                    }">
+
                     <!-- Start Date -->
                     <div>
                         <label for="startDateMobile" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
@@ -542,6 +675,7 @@
                             wire:model="formData.start_date"
                             class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                             required
+                            @change="validateEndDateTime()"
                         >
                         <x-input-error for="formData.start_date" />
                     </div>
@@ -557,6 +691,7 @@
                             wire:model="formData.start_time"
                             class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                             required
+                            @change="validateEndDateTime()"
                         >
                         <x-input-error for="formData.start_time" />
                     </div>
@@ -572,8 +707,15 @@
                             wire:model="formData.end_date"
                             class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                             required
+                            :min="startDateMobile || ''"
+                            @change="validateEndDateTime()"
+                            x-on:input="if ($event.target.value && startDateMobile && $event.target.value < startDateMobile) { $event.target.value = startDateMobile; endDateMobile = startDateMobile; $wire.set('formData.end_date', startDateMobile); }"
+                            x-on:blur="if ($event.target.value && startDateMobile && $event.target.value < startDateMobile) { $event.target.value = startDateMobile; endDateMobile = startDateMobile; $wire.set('formData.end_date', startDateMobile); }"
+                            x-on:keydown="if ($event.key === 'Enter' && $event.target.value && startDateMobile && $event.target.value < startDateMobile) { $event.preventDefault(); $event.target.value = startDateMobile; endDateMobile = startDateMobile; $wire.set('formData.end_date', startDateMobile); }"
+                            @focus="enforceMinDateMobile('endDateMobile', startDateMobile)"
                         >
                         <x-input-error for="formData.end_date" />
+                        <p class="text-xs text-gray-500 mt-1">End date must be on or after start date</p>
                     </div>
 
                     <!-- End Time -->
@@ -587,8 +729,11 @@
                             wire:model="formData.end_time"
                             class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                             required
+                            @change="validateEndDateTime()"
                         >
                         <x-input-error for="formData.end_time" />
+                    </div>
+
                     </div>
 
                     <!-- Location -->

@@ -249,14 +249,8 @@
                         <label for="contactPhone" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
                             CONTACT PHONE
                         </label>
-                        <input
-                            type="tel"
-                            id="contactPhone"
-                            wire:model="formData.contact_phone"
-                            placeholder="(555) 123-4567"
-                            class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                            required
-                        >
+                        <x-alias::phone-input id="phone" class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" name="phone" wire:model="formData.contact_phone" placeholder="555-123-4567" />
+
                         <x-input-error for="formData.contact_phone" />
                     </div>
 
@@ -662,14 +656,15 @@
                         <label for="contactPhoneMobile" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
                             CONTACT PHONE
                         </label>
-                        <input
+                        <x-alias::phone-input id="phone" class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" name="phone" wire:model="formData.contact_phone" placeholder="Phone" />
+                        <!-- <input
                             type="tel"
                             id="contactPhoneMobile"
                             wire:model="formData.contact_phone"
                             placeholder="(555) 123-4567"
                             class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                             required
-                        >
+                        > -->
                         <x-input-error for="formData.contact_phone" />
                     </div>
 

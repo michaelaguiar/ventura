@@ -12,18 +12,28 @@ class CreateCommunity
     public static function run(
         string $name,
         string $address,
+        string $city,
+        string $state,
+        string $zip,
+        string $latitude,
+        string $longitude,
         string $contactName,
         string $phone,
         string $email,
         string $logoPath
     ): Community {
         return Community::create([
-            'name' => $name,
-            'address' => $address,
-            'contact_name' => $contactName,
-            'phone' => $phone,
-            'email' => $email,
-            'logo_path' => $logoPath,
+            "name" => $name,
+            "address" => $address,
+            "city" => $city,
+            "state" => $state,
+            "zip" => $zip,
+            "latitude" => $latitude,
+            "longitude" => $longitude,
+            "contact_name" => $contactName,
+            "phone" => $phone,
+            "email" => $email,
+            "logo_path" => $logoPath,
         ]);
     }
 }

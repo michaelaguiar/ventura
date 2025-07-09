@@ -16,9 +16,9 @@
     </head>
     <body class="font-sans antialiased min-h-screen flex flex-col">
         <header class="flex justify-center pt-[70px] z-10">
-            <div class="max-w-screen-xl w-full flex items-center mb-6 px-4">
+            <a href="/" class="max-w-screen-xl w-full flex items-center mb-6 px-4">
                 <img src="{{ asset('images/logo.png') }}" alt="Ventura Logo" class="">
-            </div>
+            </a>
         </header>
 
         <main class="flex">
@@ -44,5 +44,7 @@
                 </div>
             </div>
         </footer>
+
+        @stack('scripts')
     </body>
 </html>

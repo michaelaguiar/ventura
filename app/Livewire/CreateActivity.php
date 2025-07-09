@@ -6,7 +6,7 @@ use App\Actions\CreateActivity as CreateActivityAction;
 use App\Models\Activity;
 use App\Models\Community;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -16,13 +16,13 @@ class CreateActivity extends Component
     use WithFileUploads;
 
     public $formData = [
-        'name' => null,
-        'start_date' => null,
-        'start_time' => '10:00',
-        'end_date' => null,
-        'end_time' => '12:00',
-        'location' => null,
-        'details' => null,
+        "name" => null,
+        "start_date" => null,
+        "start_time" => "10:00",
+        "end_date" => null,
+        "end_time" => "12:00",
+        "location" => null,
+        "details" => null,
     ];
 
     public $activities = [];
@@ -38,58 +38,97 @@ class CreateActivity extends Component
     public $community = null;
 
     protected $rules = [
-        'formData.name' => 'required|max:255',
-        'formData.start_date' => 'required|date',
-        'formData.start_time' => 'required',
-        'formData.end_date' => 'required|date|after_or_equal:formData.start_date',
-        'formData.end_time' => 'required',
-        'formData.location' => 'required|max:255',
-        'formData.details' => 'nullable|max:1000',
+        "formData.name" => "required|max:255",
+        "formData.start_date" => "required|date",
+        "formData.start_time" => "required",
+        "formData.end_date" =>
+            "required|date|after_or_equal:formData.start_date",
+        "formData.end_time" => "required",
+        "formData.location" => "required|max:255",
+        "formData.details" => "nullable|max:1000",
     ];
+
+    public function rules(): array
+    {
+        return [
+            "formData.name" => "required|max:255",
+            "formData.start_date" => "required|date",
+            "formData.start_time" => "required",
+            "formData.end_date" =>
+                "required|date|after_or_equal:formData.start_date",
+            "formData.end_time" => "required",
+            "formData.location" => "required|max:255",
+            "formData.details" => "nullable|max:1000",
+        ];
+    }
 
     protected $messages = [
-        'formData.name.required' => 'Activity name is required',
-        'formData.name.max' => 'Activity name must be less than 255 characters',
-        'formData.start_date.required' => 'Start date is required',
-        'formData.start_date.date' => 'Start date must be a valid date',
-        'formData.start_time.required' => 'Start time is required',
-        'formData.end_date.required' => 'End date is required',
-        'formData.end_date.date' => 'End date must be a valid date',
-        'formData.end_date.after_or_equal' => 'End date must be after or equal to start date',
-        'formData.end_time.required' => 'End time is required',
-        'formData.location.required' => 'Location is required',
-        'formData.location.max' => 'Location must be less than 255 characters',
-        'formData.details.max' => 'Activity details must be less than 1000 characters',
+        "formData.name.required" => "Activity name is required",
+        "formData.name.max" => "Activity name must be less than 255 characters",
+        "formData.start_date.required" => "Start date is required",
+        "formData.start_date.date" => "Start date must be a valid date",
+        "formData.start_time.required" => "Start time is required",
+        "formData.end_date.required" => "End date is required",
+        "formData.end_date.date" => "End date must be a valid date",
+        "formData.end_date.after_or_equal" =>
+            "End date must be after or equal to start date",
+        "formData.end_time.required" => "End time is required",
+        "formData.location.required" => "Location is required",
+        "formData.location.max" => "Location must be less than 255 characters",
+        "formData.details.max" =>
+            "Activity details must be less than 1000 characters",
     ];
 
-    public function mount(request $request, Community $community): void
+    public function messages(): array
+    {
+        return [
+            "formData.name.required" => "Activity name is required",
+            "formData.name.max" =>
+                "Activity name must be less than 255 characters",
+            "formData.start_date.required" => "Start date is required",
+            "formData.start_date.date" => "Start date must be a valid date",
+            "formData.start_time.required" => "Start time is required",
+            "formData.end_date.required" => "End date is required",
+            "formData.end_date.date" => "End date must be a valid date",
+            "formData.end_date.after_or_equal" =>
+                "End date must be after or equal to start date",
+            "formData.end_time.required" => "End time is required",
+            "formData.location.required" => "Location is required",
+            "formData.location.max" =>
+                "Location must be less than 255 characters",
+            "formData.details.max" =>
+                "Activity details must be less than 1000 characters",
+        ];
+    }
+
+    public function mount(Community $community): void
     {
         $this->community = $community;
 
         // Set default dates to today
-        $this->formData['start_date'] = Carbon::today()->format('Y-m-d');
-        $this->formData['end_date'] = Carbon::today()->format('Y-m-d');
+        $this->formData["start_date"] = Carbon::today()->format("Y-m-d");
+        $this->formData["end_date"] = Carbon::today()->format("Y-m-d");
 
         $this->loadActivities();
     }
 
     public function loadActivities(): void
     {
-        $activities = Activity::where('community_id', $this->community->id)
-            ->orderBy('start_date_time', 'asc')
+        $activities = Activity::where("community_id", $this->community->id)
+            ->orderBy("start_date_time", "asc")
             ->get();
 
         $this->activities = $activities
             ->map(function ($activity) {
                 return [
-                    'id' => $activity->id,
-                    'name' => $activity->name,
-                    'start_date_time' => Carbon::parse(
+                    "id" => $activity->id,
+                    "name" => $activity->name,
+                    "start_date_time" => Carbon::parse(
                         $activity->start_date_time
                     ),
-                    'end_date_time' => Carbon::parse($activity->end_date_time),
-                    'location' => $activity->location,
-                    'details' => $activity->details,
+                    "end_date_time" => Carbon::parse($activity->end_date_time),
+                    "location" => $activity->location,
+                    "details" => $activity->details,
                 ];
             })
             ->toArray();
@@ -97,8 +136,8 @@ class CreateActivity extends Component
 
     public function render()
     {
-        return view('livewire.create-activity')->layout(
-            'components.layouts.blank'
+        return view("livewire.create-activity")->layout(
+            "components.layouts.blank"
         );
     }
 
@@ -106,42 +145,45 @@ class CreateActivity extends Component
     {
         $this->validate();
 
+        // Additional validation for end date/time
+        $this->validateEndDateTime();
+
         try {
             CreateActivityAction::run(
                 community: $this->community,
-                name: $this->formData['name'],
-                start_date: $this->formData['start_date'],
-                start_time: $this->formData['start_time'],
-                end_date: $this->formData['end_date'],
-                end_time: $this->formData['end_time'],
-                location: $this->formData['location'],
-                details: $this->formData['details']
+                name: $this->formData["name"],
+                start_date: $this->formData["start_date"],
+                start_time: $this->formData["start_time"],
+                end_date: $this->formData["end_date"],
+                end_time: $this->formData["end_time"],
+                location: $this->formData["location"],
+                details: $this->formData["details"]
             );
 
             // Reset form after successful creation
             $this->formData = [
-                'name' => null,
-                'start_date' => Carbon::today()->format('Y-m-d'),
-                'start_time' => '10:00',
-                'end_date' => Carbon::today()->format('Y-m-d'),
-                'end_time' => '12:00',
-                'location' => null,
-                'details' => null,
+                "name" => null,
+                "start_date" => Carbon::today()->format("Y-m-d"),
+                "start_time" => "10:00",
+                "end_date" => Carbon::today()->format("Y-m-d"),
+                "end_time" => "12:00",
+                "location" => null,
+                "details" => null,
             ];
 
             // Reload activities from database
             $this->loadActivities();
 
             // Show success message
-            session()->flash('message', 'Activity created successfully!');
+            session()->flash("message", "Activity created successfully!");
         } catch (\Exception $e) {
             // Log the error for debugging
-            Log::error('Error creating activity: '.$e->getMessage());
+            Log::error("Error creating activity: " . $e->getMessage());
 
             // Show user-friendly error message
             $this->addError(
-                'general',
-                'Failed to create activity. Please try again.'
+                "general",
+                "Failed to create activity. Please try again."
             );
         }
     }
@@ -165,16 +207,16 @@ class CreateActivity extends Component
         $this->showModal = false;
     }
 
-    public function getModalActivities()
+    public function getModalActivities(): array
     {
         $offset = ($this->modalPage - 1) * $this->perPage;
 
         return array_slice($this->activities, $offset, $this->perPage);
     }
 
-    public function getTotalPages()
+    public function getTotalPages(): int
     {
-        return ceil(count($this->activities) / $this->perPage);
+        return (int) ceil(count($this->activities) / $this->perPage);
     }
 
     public function previousPage(): void
@@ -188,6 +230,23 @@ class CreateActivity extends Component
     {
         if ($this->modalPage < $this->getTotalPages()) {
             $this->modalPage++;
+        }
+    }
+
+    private function validateEndDateTime(): void
+    {
+        $startDateTime = Carbon::parse(
+            $this->formData["start_date"] . " " . $this->formData["start_time"]
+        );
+        $endDateTime = Carbon::parse(
+            $this->formData["end_date"] . " " . $this->formData["end_time"]
+        );
+
+        if ($endDateTime->lt($startDateTime)) {
+            $this->addError(
+                "formData.end_time",
+                "End date and time must be greater than or equal to start date and time"
+            );
         }
     }
 }

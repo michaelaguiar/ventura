@@ -11,7 +11,7 @@
                     <!-- Community Name -->
                     <div>
                         <label for="communityName" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
-                            COMMUNITY NAME
+                            COMMUNITY NAME <span class="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -27,17 +27,11 @@
                     <!-- Community Address -->
                     <div>
                         <label for="communityAddress" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
-                            COMMUNITY ADDRESS
+                            COMMUNITY ADDRESS <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
-                            <input
-                                type="text"
-                                id="communityAddress"
-                                wire:model="formData.address"
-                                placeholder="Community Address"
-                                class="w-full px-4 py-3 pl-12 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                                required
-                            >
+                             <x-alias::address-input wire:model="formData.address" placeholder="Community Address" required class="w-full px-4 py-3 pl-12 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" />
+
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -50,7 +44,7 @@
                     <!-- Community Contact Name -->
                     <div>
                         <label for="communityContactName" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
-                            COMMUNITY CONTACT NAME
+                            COMMUNITY CONTACT NAME <span class="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -66,23 +60,18 @@
                     <!-- Phone Number -->
                     <div>
                         <label for="phoneNumber" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
-                            PHONE NUMBER
+                            PHONE NUMBER <span class="text-red-500">*</span>
                         </label>
-                        <input
-                            type="tel"
-                            id="phoneNumber"
-                            wire:model="formData.phone"
-                            placeholder="Phone Number"
-                            class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                            required
-                        >
+
+                        <x-alias::phone-input wire:model="formData.phone" placeholder="Phone Number" required class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" />
+
                         <x-input-error for="formData.phone" />
                     </div>
 
                     <!-- Email Address -->
                     <div>
                         <label for="emailAddress" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
-                            EMAIL ADDRESS
+                            EMAIL ADDRESS <span class="text-red-500">*</span>
                         </label>
                         <input
                             type="email"
@@ -99,7 +88,7 @@
 
                     <div x-data="{ fileName: 'No file selected.', fileSelected: false }">
                         <label class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
-                            UPLOAD A LOGO
+                            UPLOAD A LOGO <span class="text-red-500">*</span>
                         </label>
                         <div>
                             <input
@@ -318,4 +307,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('address_updated', (address) => {
+           @this.updateAddress(address.detail);
+        });
+    </script>
 </div>
