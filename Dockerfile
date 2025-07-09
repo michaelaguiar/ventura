@@ -1,6 +1,8 @@
 # App Build
 FROM us-docker.pkg.dev/element-energy/gcr.io/php:8.3-frankenphp
 
+ARG GITHUB_TOKEN
+
 # Copy Configuration
 RUN sed -i 's/{$SERVER_NAME:localhost}/:{$PORT}/' /etc/caddy/Caddyfile && \
     sed -i '/CADDY_GLOBAL_OPTIONS/a http_port {$PORT}' /etc/caddy/Caddyfile && \
@@ -16,4 +18,5 @@ COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install Dependencies
-RUN composer install --optimize-autoloader --no-dev
+RUN composer config -g github-oauth.github.com $GITHUB_TOKEN && \
+    composer install --optimize-autoloader --no-dev
