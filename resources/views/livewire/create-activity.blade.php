@@ -273,7 +273,6 @@
                                 </div>
                             </div>
                             <x-input-error for="formData.end_date" />
-                            <p class="text-xs text-gray-500 mt-1">End date must be on or after start date</p>
                         </div>
 
                         <!-- End Time -->
@@ -706,7 +705,6 @@
                             @focus="enforceMinDateMobile('endDateMobile', startDateMobile)"
                         >
                         <x-input-error for="formData.end_date" />
-                        <p class="text-xs text-gray-500 mt-1">End date must be on or after start date</p>
                     </div>
 
                     <!-- End Time -->
