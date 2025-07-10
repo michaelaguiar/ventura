@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "215e51e4e4fb04b1f068737affd4cc30",
+    "content-hash": "8a45181626b8697075798aff945d5604",
     "packages": [
         {
             "name": "aliasproject/blade",
