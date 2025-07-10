@@ -325,18 +325,40 @@
                     </div>
 
                     <!-- Activity Details -->
-                    <div>
+                    <div x-data="{
+                        details: $wire.entangle('formData.details'),
+                        get charCount() {
+                            return this.details ? this.details.length : 0;
+                        },
+                        get isNearLimit() {
+                            return this.charCount >= 200;
+                        },
+                        get isOverLimit() {
+                            return this.charCount > 255;
+                        }
+                    }">
                         <label for="activityDetails" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
                             ACTIVITY DETAILS
                         </label>
                         <textarea
                             id="activityDetails"
                             wire:model="formData.details"
+                            x-model="details"
                             placeholder="Enter activity details..."
                             rows="4"
+                            maxlength="255"
                             class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white resize-none"
                         ></textarea>
-                        <x-input-error for="formData.details" />
+                        <div class="flex justify-between items-center mt-1">
+                            <x-input-error for="formData.details" />
+                            <div class="text-xs"
+                                 :class="{
+                                     'text-red-500': isNearLimit,
+                                     'text-gray-500': !isNearLimit
+                                 }">
+                                <span x-text="charCount"></span>/255
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Add Activity Button -->

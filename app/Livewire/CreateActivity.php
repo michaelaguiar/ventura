@@ -44,7 +44,7 @@ class CreateActivity extends Component
             "required|date|after_or_equal:formData.start_date",
         "formData.end_time" => "required",
         "formData.location" => "required|max:255",
-        "formData.details" => "nullable|max:1000",
+        "formData.details" => "nullable|max:255",
     ];
 
     /**
