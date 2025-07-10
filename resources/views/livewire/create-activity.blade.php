@@ -227,14 +227,8 @@
                                 START DATE
                             </label>
                             <div class="relative">
-                                <input
-                                    type="date"
-                                    id="startDate"
-                                    wire:model="formData.start_date"
-                                    class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                                    required
-                                    @change="validateEndDateTime()"
-                                >
+                                <x-alias::date-picker wire:model="formData.start_date" min="{{ $formData['start_date'] ?? now() }}" defaultDate="{{ date('m/d/Y', strtotime($formData['start_date'] ?? 'now')) }}" required class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" />
+
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -250,14 +244,8 @@
                                 START TIME
                             </label>
                             <div class="relative">
-                                <input
-                                    type="time"
-                                    id="startTime"
-                                    wire:model="formData.start_time"
-                                    class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                                    required
-                                    @change="validateEndDateTime()"
-                                >
+                                <x-alias::time-picker wire:model="formData.start_time" required class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" />
+
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -276,19 +264,8 @@
                                 END DATE
                             </label>
                             <div class="relative">
-                                <input
-                                    type="date"
-                                    id="endDate"
-                                    wire:model="formData.end_date"
-                                    class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                                    required
-                                    @change="validateEndDateTime()"
-                                    :min="startDate || ''"
-                                    x-on:input="if ($event.target.value && startDate && $event.target.value < startDate) { $event.target.value = startDate; endDate = startDate; $wire.set('formData.end_date', startDate); }"
-                                    x-on:blur="if ($event.target.value && startDate && $event.target.value < startDate) { $event.target.value = startDate; endDate = startDate; $wire.set('formData.end_date', startDate); }"
-                                    x-on:keydown="if ($event.key === 'Enter' && $event.target.value && startDate && $event.target.value < startDate) { $event.preventDefault(); $event.target.value = startDate; endDate = startDate; $wire.set('formData.end_date', startDate); }"
-                                    @focus="enforceMinDate('endDate', startDate)"
-                                >
+                                <x-alias::date-picker wire:model="formData.end_date" min="{{ $formData['start_date'] ?? now() }}" defaultDate="{{ date('m/d/Y', strtotime($formData['end_date'] ?? 'now')) }}" required class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" />
+
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -305,14 +282,8 @@
                                 END TIME
                             </label>
                             <div class="relative">
-                                <input
-                                    type="time"
-                                    id="endTime"
-                                    wire:model="formData.end_time"
-                                    class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
-                                    required
-                                    @change="validateEndDateTime()"
-                                >
+                                <x-alias::time-picker wire:model="formData.end_time" required class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white" />
+
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-[#03a1bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -613,9 +584,7 @@
                                this.updateEndDateMinMobile();
                            });
                         },
-                        validateEndDateTime() {
-                            this.validateDateTime('startDateMobile', 'startTimeMobile', 'endDateMobile', 'endTimeMobile');
-                        },
+
                         updateEndDateMinMobile() {
                             const startDateValue = this.startDateMobile;
                             const endDateInput = document.getElementById('endDateMobile');

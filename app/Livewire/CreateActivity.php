@@ -106,8 +106,8 @@ class CreateActivity extends Component
         $this->community = $community;
 
         // Set default dates to today
-        $this->formData["start_date"] = Carbon::today()->format("Y-m-d");
-        $this->formData["end_date"] = Carbon::today()->format("Y-m-d");
+        $this->formData["start_date"] = Carbon::today()->format("m/d/Y");
+        $this->formData["end_date"] = Carbon::today()->format("m/d/Y");
 
         $this->loadActivities();
     }
