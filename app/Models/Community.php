@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Community extends Model
 {
     protected $fillable = [
-        "name",
-        "address",
-        "city",
-        "state",
-        "zip",
-        "latitude",
-        "longitude",
-        "contact_name",
-        "phone",
-        "email",
-        "logo_path",
+        'name',
+        'address',
+        'city',
+        'state',
+        'zip',
+        'latitude',
+        'longitude',
+        'contact_name',
+        'phone',
+        'email',
+        'logo_path',
     ];
 
     /**

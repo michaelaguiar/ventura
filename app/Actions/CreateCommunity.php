@@ -23,17 +23,17 @@ class CreateCommunity
         string $logoPath
     ): Community {
         return Community::create([
-            "name" => $name,
-            "address" => $address,
-            "city" => $city,
-            "state" => $state,
-            "zip" => $zip,
-            "latitude" => $latitude,
-            "longitude" => $longitude,
-            "contact_name" => $contactName,
-            "phone" => $phone,
-            "email" => $email,
-            "logo_path" => $logoPath,
+            'name' => $name,
+            'address' => $address,
+            'city' => $city,
+            'state' => $state,
+            'zip' => $zip,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'contact_name' => $contactName,
+            'phone' => $phone,
+            'email' => $email,
+            'logo_path' => $logoPath,
         ]);
     }
 }
