@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Vendor extends Model
 {
     protected $fillable = [
-        'community_id',
-        'name',
-        'phone',
-        'category',
-        'logo_path',
+        "community_id",
+        "name",
+        "phone",
+        "email",
+        "website",
+        "contact_name",
+        "category",
+        "logo_path",
     ];
 
     public function community()

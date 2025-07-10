@@ -5,7 +5,7 @@
         <!-- Desktop Layout - Side by Side -->
         <div class="hidden lg:flex relative " style="">
             <!-- Background Hand Image -->
-            <div class="absolute w-[630px] h-[669px] bottom-0 left-[300px] xl:left-[35%]" style="background-image: url('{{ asset('images/hand_sub.png') }}'); background-size: 630px 669px; background-repeat: no-repeat; background-position: right bottom; z-index: 1;">
+            <div class="absolute w-[630px] h-[669px] bottom-0 left-[300px] lg:left-[35%]" style="background-image: url('{{ asset('images/hand_sub.png') }}'); background-size: 630px 669px; background-repeat: no-repeat; background-position: right bottom; z-index: 1;">
                 <div class="w-[239px] h-[300px] flex flex-col ml-[63px] mt-[36px]">
                     <div class="flex-1 text-center">
                         <h3 class="font-bold text-[11px] text-gray-800">{{ $community->name ?? 'Desert Vista RV Resort' }}</h3>
@@ -40,6 +40,7 @@
                                 </a>
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">WELCOME</span>
                             </div>
+
                             <div class="flex flex-col items-center">
                                 <a href="/community/{{ $community->id }}/activities" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,6 +49,7 @@
                                 </a>
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">ACTIVITIES</span>
                             </div>
+
                             <!-- <div class="flex flex-col items-center">
                                 <a href="#" class="bg-[#f0ad4e] rounded-lg flex items-center justify-center p-3 hover:bg-[#ec9c2e] transition-colors w-full h-12">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,6 +68,7 @@
                                 </a>
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">VENDORS</span>
                             </div>
+
                             <div class="flex flex-col items-center">
                                 <a href="/community/{{ $community->id }}/maintenance" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,6 +77,7 @@
                                 </a>
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">MAINTENANCE</span>
                             </div>
+
                             <div class="flex flex-col items-center">
                                 <a href="/community/{{ $community->id }}/amenities" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -838,15 +842,7 @@
             </div>
 
             <!-- Phone Mockup Section - Below Form on Mobile -->
-            <div class="flex justify-center items-end flex-grow px-4">
-                <div class="relative">
-                    <img
-                        src="{{ asset('images/community-hand.png') }}"
-                        alt="Phone Mockup"
-                        class="w-full h-full object-contain object-bottom"
-                    >
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
