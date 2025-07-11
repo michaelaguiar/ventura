@@ -12,9 +12,9 @@
         display: none !important;
     }
 
-    .fi-fo-file-upload [data-file-key] {
+    /* .fi-fo-file-upload [data-file-key] {
         display: none !important;
-    }
+    } */
 
     /* Hide file info sections */
     .fi-fo-file-upload .fi-fo-file-upload-file-info {
@@ -31,11 +31,6 @@
 
     /* Hide file actions */
     .fi-fo-file-upload .fi-fo-file-upload-file-actions {
-        display: none !important;
-    }
-
-    /* Hide uploaded files container completely */
-    .fi-fo-file-upload > div > div:last-child {
         display: none !important;
     }
 
