@@ -4,21 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Community extends Model
 {
     protected $fillable = [
-        'name',
-        'address',
-        'city',
-        'state',
-        'zip',
-        'latitude',
-        'longitude',
-        'contact_name',
-        'phone',
-        'email',
-        'logo_path',
+        "name",
+        "address",
+        "city",
+        "state",
+        "zip",
+        "latitude",
+        "longitude",
+        "contact_name",
+        "phone",
+        "email",
+        "logo_path",
     ];
 
     /**
@@ -44,10 +45,25 @@ class Community extends Model
     /**
      * Members associated with the community.
      *
-     * @return HasMany<User,Community>
+     * @return BelongsToMany<User>
      */
-    public function members(): HasMany
+    public function members(): BelongsToMany
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class, "community_members")
+            ->withPivot(["joined_at", "role", "is_active"])
+            ->withTimestamps()
+            ->wherePivot("is_active", true);
+    }
+
+    /**
+     * All members associated with the community (including inactive).
+     *
+     * @return BelongsToMany<User>
+     */
+    public function allMembers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, "community_members")
+            ->withPivot(["joined_at", "role", "is_active"])
+            ->withTimestamps();
     }
 }

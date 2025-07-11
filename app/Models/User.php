@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -57,5 +58,30 @@ class User extends Authenticatable implements FilamentUser
             ->take(2)
             ->map(fn($word) => Str::substr($word, 0, 1))
             ->implode("");
+    }
+
+    /**
+     * Communities that the user belongs to.
+     *
+     * @return BelongsToMany<Community>
+     */
+    public function communities(): BelongsToMany
+    {
+        return $this->belongsToMany(Community::class, "community_members")
+            ->withPivot(["joined_at", "role", "is_active"])
+            ->withTimestamps()
+            ->wherePivot("is_active", true);
+    }
+
+    /**
+     * All communities that the user belongs to (including inactive).
+     *
+     * @return BelongsToMany<Community>
+     */
+    public function allCommunities(): BelongsToMany
+    {
+        return $this->belongsToMany(Community::class, "community_members")
+            ->withPivot(["joined_at", "role", "is_active"])
+            ->withTimestamps();
     }
 }
