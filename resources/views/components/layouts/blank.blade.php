@@ -13,6 +13,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="font-sans antialiased min-h-screen flex flex-col" x-data="{ mobileMenuOpen: false }">
         <header class="flex justify-center pt-[70px] z-10 relative">
@@ -111,5 +112,6 @@
         </footer>
 
         @stack('scripts')
+        @livewireScripts
     </body>
 </html>

@@ -200,6 +200,7 @@ class CreateVendor extends Component
 
     public function showVendorDetails($vendorId): void
     {
+        Log::info("showVendorDetails called", ["vendorId" => $vendorId]);
         $vendor = collect($this->vendors)->firstWhere("id", $vendorId);
 
         if ($vendor) {
@@ -210,7 +211,14 @@ class CreateVendor extends Component
 
     public function closeVendorDetail(): void
     {
+        Log::info("closeVendorDetail called");
         $this->showVendorDetail = false;
         $this->selectedVendor = null;
+    }
+
+    public function testMethod(): void
+    {
+        Log::info("testMethod called - Livewire is working!");
+        session()->flash("message", "Test method called successfully!");
     }
 }
