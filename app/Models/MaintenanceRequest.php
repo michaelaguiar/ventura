@@ -10,20 +10,20 @@ use Illuminate\Support\Facades\Storage;
 class MaintenanceRequest extends Model
 {
     protected $fillable = [
-        "community_id",
-        "user_id",
-        "title",
-        "description",
-        "priority",
-        "category",
-        "status",
-        "photos",
+        'community_id',
+        'user_id',
+        'title',
+        'description',
+        'priority',
+        'category',
+        'status',
+        'photos',
     ];
 
     protected $casts = [
-        "photos" => "array",
-        "status" => MaintenanceRequestStatus::class,
-        "category" => MaintenanceRequestCategory::class,
+        'photos' => 'array',
+        'status' => MaintenanceRequestStatus::class,
+        'category' => MaintenanceRequestCategory::class,
     ];
 
     public function community()
@@ -41,15 +41,15 @@ class MaintenanceRequest extends Model
      */
     public function getPhotoUrlsAttribute(): array
     {
-        if (!$this->photos) {
+        if (! $this->photos) {
             return [];
         }
 
         return collect($this->photos)
             ->map(function ($photo, $index) {
-                return route("maintenance-photos.show", [
-                    "maintenanceRequest" => $this->id,
-                    "photoIndex" => $index,
+                return route('maintenance-photos.show', [
+                    'maintenanceRequest' => $this->id,
+                    'photoIndex' => $index,
                 ]);
             })
             ->toArray();
@@ -60,13 +60,13 @@ class MaintenanceRequest extends Model
      */
     public function getPhotoUrl(int $index): ?string
     {
-        if (!$this->photos || !isset($this->photos[$index])) {
+        if (! $this->photos || ! isset($this->photos[$index])) {
             return null;
         }
 
-        return route("maintenance-photos.show", [
-            "maintenanceRequest" => $this->id,
-            "photoIndex" => $index,
+        return route('maintenance-photos.show', [
+            'maintenanceRequest' => $this->id,
+            'photoIndex' => $index,
         ]);
     }
 
@@ -75,13 +75,13 @@ class MaintenanceRequest extends Model
      */
     public function getPublicPhotoUrls(): array
     {
-        if (!$this->photos) {
+        if (! $this->photos) {
             return [];
         }
 
         return collect($this->photos)
             ->map(function ($photo) {
-                return Storage::disk("gcs")->url($photo);
+                return Storage::disk('gcs')->url($photo);
             })
             ->toArray();
     }
@@ -91,7 +91,7 @@ class MaintenanceRequest extends Model
      */
     public function hasPhotos(): bool
     {
-        return !empty($this->photos);
+        return ! empty($this->photos);
     }
 
     /**
@@ -107,30 +107,30 @@ class MaintenanceRequest extends Model
      */
     public function getPhotoFileInfo(int $index): ?array
     {
-        if (!$this->photos || !isset($this->photos[$index])) {
+        if (! $this->photos || ! isset($this->photos[$index])) {
             return null;
         }
 
         $photoPath = $this->photos[$index];
 
         try {
-            $fileSize = Storage::disk("gcs")->size($photoPath);
-            $mimeType = Storage::disk("gcs")->mimeType($photoPath);
+            $fileSize = Storage::disk('gcs')->size($photoPath);
+            $mimeType = Storage::disk('gcs')->mimeType($photoPath);
 
             return [
-                "name" => basename($photoPath),
-                "size" => $fileSize,
-                "size_formatted" => $fileSize
-                    ? number_format($fileSize / 1024, 1) . " KB"
-                    : "Unknown size",
-                "mime_type" => $mimeType,
+                'name' => basename($photoPath),
+                'size' => $fileSize,
+                'size_formatted' => $fileSize
+                    ? number_format($fileSize / 1024, 1).' KB'
+                    : 'Unknown size',
+                'mime_type' => $mimeType,
             ];
         } catch (\Exception $e) {
             return [
-                "name" => basename($photoPath),
-                "size" => 0,
-                "size_formatted" => "Unknown size",
-                "mime_type" => "image/jpeg",
+                'name' => basename($photoPath),
+                'size' => 0,
+                'size_formatted' => 'Unknown size',
+                'mime_type' => 'image/jpeg',
             ];
         }
     }

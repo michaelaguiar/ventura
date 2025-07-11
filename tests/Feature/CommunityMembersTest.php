@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Community;
-use App\Models\User;
 use App\Models\CommunityMember;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);

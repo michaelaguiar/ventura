@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\MaintenanceRequest;
-use App\Models\Community;
-use App\Models\User;
 use App\Enums\MaintenanceRequestCategory;
 use App\Enums\MaintenanceRequestStatus;
+use App\Models\Community;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -103,9 +102,9 @@ class MaintenanceRequestFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'photos' => [
-                'maintenance-photos/' . fake()->uuid() . '.jpg',
-                'maintenance-photos/' . fake()->uuid() . '.jpg',
-                'maintenance-photos/' . fake()->uuid() . '.jpg',
+                'maintenance-photos/'.fake()->uuid().'.jpg',
+                'maintenance-photos/'.fake()->uuid().'.jpg',
+                'maintenance-photos/'.fake()->uuid().'.jpg',
             ],
         ]);
     }

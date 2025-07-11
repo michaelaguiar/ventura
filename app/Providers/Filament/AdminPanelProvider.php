@@ -24,32 +24,32 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id("admin")
-            ->path("admin")
+            ->id('admin')
+            ->path('admin')
             ->login()
             ->colors([
-                "primary" => Color::Amber,
+                'primary' => Color::Amber,
             ])
             ->discoverResources(
-                in: app_path("Filament/Resources"),
-                for: "App\\Filament\\Resources"
+                in: app_path('Filament/Resources'),
+                for: 'App\\Filament\\Resources'
             )
             ->discoverPages(
-                in: app_path("Filament/Pages"),
-                for: "App\\Filament\\Pages"
+                in: app_path('Filament/Pages'),
+                for: 'App\\Filament\\Pages'
             )
             ->pages([Pages\Dashboard::class])
             ->discoverWidgets(
-                in: app_path("Filament/Widgets"),
-                for: "App\\Filament\\Widgets"
+                in: app_path('Filament/Widgets'),
+                for: 'App\\Filament\\Widgets'
             )
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
             ->renderHook(
-                "panels::head.end",
-                fn(): string => view("filament.custom-styles")->render()
+                'panels::head.end',
+                fn (): string => view('filament.custom-styles')->render()
             )
             ->middleware([
                 EncryptCookies::class,

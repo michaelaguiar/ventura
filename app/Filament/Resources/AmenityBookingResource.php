@@ -6,14 +6,12 @@ use App\Filament\Resources\AmenityBookingResource\Pages;
 use App\Models\AmenityBooking;
 use App\Models\Community;
 use App\Models\User;
-use App\Enums\BookingStatus;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AmenityBookingResource extends Resource
 {

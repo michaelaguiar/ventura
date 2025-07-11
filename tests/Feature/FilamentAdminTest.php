@@ -1,22 +1,19 @@
 <?php
 
-use App\Models\Community;
-use App\Models\User;
-use App\Models\MaintenanceRequest;
 use App\Enums\MaintenanceRequestCategory;
 use App\Enums\MaintenanceRequestStatus;
+use App\Filament\Resources\CommunityResource\Pages\EditCommunity;
+use App\Filament\Resources\CommunityResource\Pages\ListCommunities;
+use App\Filament\Resources\CommunityResource\RelationManagers\MembersRelationManager;
+use App\Filament\Resources\MaintenanceRequestResource\Pages\ListMaintenanceRequests;
+use App\Filament\Resources\UserResource\Pages\EditUser;
+use App\Filament\Resources\UserResource\Pages\ListUsers;
+use App\Filament\Resources\UserResource\RelationManagers\CommunitiesRelationManager;
+use App\Models\Community;
+use App\Models\MaintenanceRequest;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
-use App\Filament\Resources\CommunityResource;
-use App\Filament\Resources\UserResource;
-use App\Filament\Resources\MaintenanceRequestResource;
-use App\Filament\Resources\CommunityResource\Pages\ListCommunities;
-use App\Filament\Resources\CommunityResource\Pages\EditCommunity;
-use App\Filament\Resources\UserResource\Pages\ListUsers;
-use App\Filament\Resources\UserResource\Pages\EditUser;
-use App\Filament\Resources\MaintenanceRequestResource\Pages\ListMaintenanceRequests;
-use App\Filament\Resources\CommunityResource\RelationManagers\MembersRelationManager;
-use App\Filament\Resources\UserResource\RelationManagers\CommunitiesRelationManager;
 
 uses(RefreshDatabase::class);
 

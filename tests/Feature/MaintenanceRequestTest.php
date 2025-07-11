@@ -1,13 +1,11 @@
 <?php
 
-use App\Models\Community;
-use App\Models\User;
-use App\Models\MaintenanceRequest;
 use App\Enums\MaintenanceRequestCategory;
 use App\Enums\MaintenanceRequestStatus;
+use App\Models\Community;
+use App\Models\MaintenanceRequest;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -117,10 +115,10 @@ describe('MaintenanceRequest Enums', function () {
             'common_areas', 'roofing', 'flooring', 'painting', 'doors_windows',
             'lighting', 'garbage_recycling', 'parking', 'fencing', 'playground',
             'clubhouse', 'laundry', 'internet_cable', 'safety_emergency',
-            'accessibility', 'other'
+            'accessibility', 'other',
         ];
 
-        $actualCategories = array_map(fn($case) => $case->value, MaintenanceRequestCategory::cases());
+        $actualCategories = array_map(fn ($case) => $case->value, MaintenanceRequestCategory::cases());
 
         foreach ($expectedCategories as $category) {
             expect($actualCategories)->toContain($category);
@@ -129,10 +127,10 @@ describe('MaintenanceRequest Enums', function () {
 
     it('has all required status cases', function () {
         $expectedStatuses = [
-            'pending', 'in_progress', 'completed', 'cancelled', 'on_hold', 'requires_approval'
+            'pending', 'in_progress', 'completed', 'cancelled', 'on_hold', 'requires_approval',
         ];
 
-        $actualStatuses = array_map(fn($case) => $case->value, MaintenanceRequestStatus::cases());
+        $actualStatuses = array_map(fn ($case) => $case->value, MaintenanceRequestStatus::cases());
 
         foreach ($expectedStatuses as $status) {
             expect($actualStatuses)->toContain($status);

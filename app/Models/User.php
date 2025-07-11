@@ -3,13 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -21,14 +21,14 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var list<string>
      */
-    protected $fillable = ["name", "email", "password"];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>
      */
-    protected $hidden = ["password", "remember_token"];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * Get the attributes that should be cast.
@@ -38,14 +38,14 @@ class User extends Authenticatable implements FilamentUser
     protected function casts(): array
     {
         return [
-            "email_verified_at" => "datetime",
-            "password" => "hashed",
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
         ];
     }
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return in_array($this->email, ["mike@aliasproject.com"]);
+        return in_array($this->email, ['mike@aliasproject.com']);
     }
 
     /**
@@ -54,10 +54,10 @@ class User extends Authenticatable implements FilamentUser
     public function initials(): string
     {
         return Str::of($this->name)
-            ->explode(" ")
+            ->explode(' ')
             ->take(2)
-            ->map(fn($word) => Str::substr($word, 0, 1))
-            ->implode("");
+            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->implode('');
     }
 
     /**
@@ -67,10 +67,10 @@ class User extends Authenticatable implements FilamentUser
      */
     public function communities(): BelongsToMany
     {
-        return $this->belongsToMany(Community::class, "community_members")
-            ->withPivot(["joined_at", "role", "is_active"])
+        return $this->belongsToMany(Community::class, 'community_members')
+            ->withPivot(['joined_at', 'role', 'is_active'])
             ->withTimestamps()
-            ->wherePivot("is_active", true);
+            ->wherePivot('is_active', true);
     }
 
     /**
@@ -80,8 +80,8 @@ class User extends Authenticatable implements FilamentUser
      */
     public function allCommunities(): BelongsToMany
     {
-        return $this->belongsToMany(Community::class, "community_members")
-            ->withPivot(["joined_at", "role", "is_active"])
+        return $this->belongsToMany(Community::class, 'community_members')
+            ->withPivot(['joined_at', 'role', 'is_active'])
             ->withTimestamps();
     }
 }

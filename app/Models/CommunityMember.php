@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CommunityMember extends Model
 {
     protected $fillable = [
-        "community_id",
-        "user_id",
-        "joined_at",
-        "role",
-        "is_active",
+        'community_id',
+        'user_id',
+        'joined_at',
+        'role',
+        'is_active',
     ];
 
     protected $casts = [
-        "joined_at" => "datetime",
-        "is_active" => "boolean",
+        'joined_at' => 'datetime',
+        'is_active' => 'boolean',
     ];
 
     /**

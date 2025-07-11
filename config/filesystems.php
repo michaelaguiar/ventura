@@ -12,7 +12,7 @@ return [
     |
     */
 
-    "default" => env("FILESYSTEM_DISK", "local"),
+    'default' => env('FILESYSTEM_DISK', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -27,58 +27,57 @@ return [
     |
     */
 
-    "disks" => [
-        "local" => [
-            "driver" => "local",
-            "root" => storage_path("app/private"),
-            "serve" => true,
-            "throw" => false,
-            "report" => false,
+    'disks' => [
+        'local' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
+            'serve' => true,
+            'throw' => false,
+            'report' => false,
         ],
 
-        "public" => [
-            "driver" => "local",
-            "root" => storage_path("app/public"),
-            "url" => env("APP_URL") . "/storage",
-            "visibility" => "public",
-            "throw" => false,
-            "report" => false,
+        'public' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
         ],
 
-        "s3" => [
-            "driver" => "s3",
-            "key" => env("AWS_ACCESS_KEY_ID"),
-            "secret" => env("AWS_SECRET_ACCESS_KEY"),
-            "region" => env("AWS_DEFAULT_REGION"),
-            "bucket" => env("AWS_BUCKET"),
-            "url" => env("AWS_URL"),
-            "endpoint" => env("AWS_ENDPOINT"),
-            "use_path_style_endpoint" => env(
-                "AWS_USE_PATH_STYLE_ENDPOINT",
+        's3' => [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'url' => env('AWS_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env(
+                'AWS_USE_PATH_STYLE_ENDPOINT',
                 false
             ),
-            "throw" => false,
-            "report" => false,
+            'throw' => false,
+            'report' => false,
         ],
 
-        "gcs" => [
-            "driver" => "gcs",
-            "key_file_path" => env("GOOGLE_CLOUD_KEY_FILE", null),
-            "key_file" => [],
-            "project_id" => env("GOOGLE_CLOUD_PROJECT_ID", "your-project-id"),
-            "bucket" => env("GOOGLE_CLOUD_STORAGE_BUCKET", "your-bucket"),
-            "path_prefix" => env("GOOGLE_CLOUD_STORAGE_PATH_PREFIX", ""),
-            "storage_api_uri" => env("GOOGLE_CLOUD_STORAGE_API_URI", null),
-            "api_endpoint" => env("GOOGLE_CLOUD_STORAGE_API_ENDPOINT", null),
-            "visibility" => "public",
-            "visibility_handler" =>
-                \League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility::class,
-            "metadata" => [
-                "cacheControl" => "public,max-age=86400",
-                "contentDisposition" => "inline",
+        'gcs' => [
+            'driver' => 'gcs',
+            'key_file_path' => env('GOOGLE_CLOUD_KEY_FILE', null),
+            'key_file' => [],
+            'project_id' => env('GOOGLE_CLOUD_PROJECT_ID', 'your-project-id'),
+            'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET', 'your-bucket'),
+            'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', ''),
+            'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null),
+            'api_endpoint' => env('GOOGLE_CLOUD_STORAGE_API_ENDPOINT', null),
+            'visibility' => 'public',
+            'visibility_handler' => \League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility::class,
+            'metadata' => [
+                'cacheControl' => 'public,max-age=86400',
+                'contentDisposition' => 'inline',
             ],
-            "throw" => false,
-            "report" => false,
+            'throw' => false,
+            'report' => false,
         ],
     ],
 
@@ -93,7 +92,7 @@ return [
     |
     */
 
-    "links" => [
-        public_path("storage") => storage_path("app/public"),
+    'links' => [
+        public_path('storage') => storage_path('app/public'),
     ],
 ];

@@ -18,7 +18,7 @@ class CommunityFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company() . ' Community',
+            'name' => fake()->company().' Community',
             'address' => fake()->streetAddress(),
             'city' => fake()->city(),
             'state' => fake()->state(),
@@ -38,7 +38,7 @@ class CommunityFactory extends Factory
     public function withLogo(): static
     {
         return $this->state(fn (array $attributes) => [
-            'logo_path' => 'community-logos/' . fake()->uuid() . '.jpg',
+            'logo_path' => 'community-logos/'.fake()->uuid().'.jpg',
         ]);
     }
 
