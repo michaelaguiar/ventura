@@ -5,7 +5,7 @@
         <!-- Desktop Layout - Side by Side -->
         <div class="lg:flex relative min-h-[750px]">
             <!-- Left Side - Form Section -->
-            <div class="flex flex-col justify-center px-8 pt-12 lg:pt-24 pb-6 lg:w-1/2">
+            <div class="flex flex-col justify-center px-8 pt-12 lg:pt-24 pb-6 lg:w-1/3">
                 <!-- Single Form for Both Desktop and Mobile -->
                 <form wire:submit="next" class="space-y-2 max-w-sm mx-auto lg:mx-0">
                     <!-- Community Name -->
@@ -149,7 +149,7 @@
             </div>
 
             <!-- Right Side - Image Section (Desktop Only) -->
-            <div class="hidden lg:block lg:w-1/2 relative">
+            <div class="hidden lg:block lg:w-2/3 relative">
                 <div class="absolute inset-0" style="background-image: url('{{ asset('images/community-hand.png') }}'); background-size: 796px 742px; background-repeat: no-repeat; background-position: bottom right;">
                 </div>
             </div>
