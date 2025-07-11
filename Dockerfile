@@ -18,5 +18,6 @@ COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install Dependencies
-RUN composer config -g github-oauth.github.com $GITHUB_TOKEN && \
+RUN apk add --no-cache php83-intl && \
+    composer config -g github-oauth.github.com $GITHUB_TOKEN && \
     composer install --optimize-autoloader --no-dev
