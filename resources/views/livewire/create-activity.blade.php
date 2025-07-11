@@ -158,19 +158,37 @@
                     </div>
 
                     <!-- Activity Details -->
-                    <div>
+                    <div x-data="{
+                        details: $wire.entangle('formData.details'),
+                        get charCount() {
+                            return this.details ? this.details.length : 0;
+                        },
+                        get isNearLimit() {
+                            return this.charCount >= 200;
+                        }
+                    }">
                         <label for="activityDetails" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
                             ACTIVITY DETAILS
                         </label>
                         <textarea
                             id="activityDetails"
                             wire:model="formData.details"
+                            x-model="details"
                             placeholder="Enter activity details..."
                             rows="4"
                             maxlength="255"
                             class="w-full px-4 py-3 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white resize-none"
                         ></textarea>
-                        <x-input-error for="formData.details" />
+                        <div class="flex justify-between items-center mt-1">
+                            <x-input-error for="formData.details" />
+                            <div class="text-xs font-bold"
+                                 :class="{
+                                     'text-red-500': isNearLimit,
+                                     'text-white': !isNearLimit
+                                 }">
+                                <span x-text="charCount"></span>/255
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Submit Button -->
@@ -253,7 +271,7 @@
             </div>
 
             <!-- Phone Mockup (Desktop Only) -->
-            <div class="hidden lg:block absolute w-[630px] h-[669px] bottom-0 left-[35%] pointer-events-none" style="background-image: url('{{ asset('images/hand_sub.png') }}'); background-size: 630px 669px; background-repeat: no-repeat; background-position: right bottom; z-index: 1;">
+            <div class="hidden lg:block absolute w-[630px] h-[669px] bottom-0 left-[35%]" style="background-image: url('{{ asset('images/hand_sub.png') }}'); background-size: 630px 669px; background-repeat: no-repeat; background-position: right bottom; z-index: 1;">
                 <div class="w-[239px] h-[300px] flex flex-col ml-[63px] mt-[36px]">
                     <div class="flex-1 text-center">
                         <h3 class="font-bold text-[11px] text-gray-800">{{ $community->name ?? 'Desert Vista RV Resort' }}</h3>
@@ -274,10 +292,10 @@
                         </div>
                     </div>
 
-                    <div class="bg-white flex-1 px-6 py-4 rounded-b-3xl">
+                    <div class="bg-white flex-1 px-6 py-4 rounded-b-3xl relative z-10">
                         <div class="grid grid-cols-3 gap-3 h-full">
                             <div class="flex flex-col items-center">
-                                <a href="/" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
+                                <a href="/" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12 relative z-20">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                                     </svg>
@@ -285,7 +303,7 @@
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">WELCOME</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <a href="/community/{{ $community->id }}/activities" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
+                                <a href="/community/{{ $community->id }}/activities" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12 relative z-20">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
@@ -293,7 +311,7 @@
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">ACTIVITIES</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <a href="/community/{{ $community->id }}/vendors" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
+                                <a href="/community/{{ $community->id }}/vendors" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12 relative z-20">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
@@ -301,7 +319,7 @@
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">VENDORS</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <a href="/community/{{ $community->id }}/maintenance" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
+                                <a href="/community/{{ $community->id }}/maintenance" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12 relative z-20">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
                                     </svg>
@@ -309,7 +327,7 @@
                                 <span class="text-[9px] text-gray-700 font-medium mt-1">MAINTENANCE</span>
                             </div>
                             <div class="flex flex-col items-center">
-                                <a href="/community/{{ $community->id }}/amenities" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12">
+                                <a href="/community/{{ $community->id }}/amenities" class="bg-[#72d0df] rounded-lg flex items-center justify-center p-3 hover:bg-[#5bc5d6] transition-colors w-full h-12 relative z-20">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                                     </svg>
