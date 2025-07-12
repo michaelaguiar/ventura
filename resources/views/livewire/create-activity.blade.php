@@ -22,7 +22,15 @@
                     </div>
                 @endif
 
-                <form wire:submit="addActivity" class="space-y-4 w-full max-w-sm mx-auto lg:mx-0">
+                <form wire:submit="addActivity" class="space-y-4 w-full max-w-sm mx-auto lg:mx-0" x-data="{
+                    startDate: $wire.entangle('formData.start_date'),
+                    endDate: $wire.entangle('formData.end_date'),
+                    validateDates() {
+                        if (this.startDate && this.endDate && this.endDate < this.startDate) {
+                            this.endDate = this.startDate;
+                        }
+                    }
+                }" x-init="$watch('startDate', () => validateDates())">
                     <!-- Activity Name -->
                     <div>
                         <label for="activityName" class="block text-xs font-bold text-gray-700 mb-2 tracking-wider">
@@ -49,6 +57,7 @@
                                 <x-alias::date-picker
                                     id="startDate"
                                     wire:model="formData.start_date"
+                                    x-model="startDate"
                                     min="{{ now()->format('Y-m-d') }}"
                                     required
                                     class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
@@ -93,7 +102,8 @@
                                 <x-alias::date-picker
                                     id="endDate"
                                     wire:model="formData.end_date"
-                                    min="{{ now()->format('Y-m-d') }}"
+                                    x-model="endDate"
+                                    x-bind:min="startDate || '{{ now()->format('Y-m-d') }}'"
                                     required
                                     class="w-full px-4 py-3 pr-10 border border-[#72d0df] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                                 />
